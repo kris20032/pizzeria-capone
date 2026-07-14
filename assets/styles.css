@@ -110,7 +110,7 @@ p{max-width:65ch}
   backdrop-filter:saturate(140%) blur(10px);
   border-bottom:var(--hairline);
 }
-.nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:88px}
 .brand{display:flex;flex-direction:column;line-height:1}
 .brand .name{font-family:var(--font-display);font-weight:800;font-size:1.35rem;letter-spacing:.04em}
 .brand .sub{font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);margin-top:5px}
@@ -475,7 +475,7 @@ section{padding-block:clamp(64px,8vw,128px)}
 .nav.nav-hidden{transform:translateY(-100%)}
 /* NEUTRALIZACJA base is-stuck dla gastro (gastro.js używa nav-solid; base.js dalej rusza is-stuck, ale bez efektu wizualnego) */
 .nav.is-stuck{background:transparent;box-shadow:none;border-bottom-color:transparent}
-.nav.is-stuck .nav-inner{height:64px}
+.nav.is-stuck .nav-inner{height:76px}
 /* SCRIM: ciemny gradient pod navem -> biały tekst czytelny nad zdjęciem; znika gdy nav lity */
 .nav::after{content:"";position:absolute;left:0;right:0;top:0;height:150px;z-index:-1;pointer-events:none;
   transition:opacity .35s ease;background:linear-gradient(180deg,rgba(8,6,4,.55) 0%,rgba(8,6,4,0) 100%)}
@@ -506,7 +506,7 @@ section{padding-block:clamp(64px,8vw,128px)}
 .nav.nav-solid.nav-hidden{background:transparent;box-shadow:none;border-bottom-color:transparent}
 /* ===== DESKTOP (>=681px): 3 strefy, STAŁA wysokość 64px ===== */
 @media(min-width:681px){
-  .nav .nav-inner{position:relative;height:64px}
+  .nav .nav-inner{position:relative;height:74px}
   .nav .nav-links{flex:1;justify-content:center;gap:clamp(1rem,2.2vw,1.9rem);padding-right:9.5rem}
   .nav .nav-links a.btn-accent{position:absolute;right:0;top:50%;transform:translateY(-50%);margin:0}
   .nav:not(.nav-solid) .nav-links a.btn-accent{background:transparent;border-color:rgba(245,241,234,.55);color:#f5f1ea}
@@ -543,9 +543,9 @@ section{padding-block:clamp(64px,8vw,128px)}
 /* === LOGO klienta (Capone): badge w nav - czarny rysunek na białym tle,
    czytelny i na ciemnym scrimie nad hero, i na kremowym nav-solid === */
 .nav .brand.brand-has-logo{align-items:center;gap:.75rem}
-.brand-logo{height:58px;width:auto;border-radius:10px;box-shadow:0 1px 8px rgba(8,6,4,.28)}
-.nav.is-stuck .brand-logo{height:48px}
-@media(max-width:680px){.brand-logo{height:44px}}
+.brand-logo{height:72px;width:auto;border-radius:12px;box-shadow:0 1px 8px rgba(8,6,4,.28)}
+.nav.is-stuck .brand-logo{height:62px}
+@media(max-width:680px){.brand-logo{height:52px}}
 
 /* === MENU DOCELOWE (pełna karta z cenami) === */
 .menu2{max-width:940px;margin:0 auto}
