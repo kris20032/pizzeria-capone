@@ -758,12 +758,15 @@ html{scroll-behavior:smooth}
 .nav-links{gap:clamp(22px,2.6vw,40px)}
 .nav-links a:not(.btn){position:relative;font-size:.76rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;opacity:.82;transition:opacity .3s}
 .nav-links a:not(.btn):hover{opacity:1;color:inherit}
-.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;right:100%;bottom:-7px;height:1px;background:currentColor;transition:right .34s cubic-bezier(.25,.8,.25,1)}
-.nav-links a:not(.btn):hover::after{right:0}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:50%;right:50%;bottom:-8px;height:2px;background:currentColor;border-radius:2px;transition:left .32s cubic-bezier(.25,.8,.25,1),right .32s cubic-bezier(.25,.8,.25,1)}
+.nav-links a:not(.btn):hover::after{left:0;right:0}
 .nav-links a:not(.btn).current{opacity:1}
-.nav-links a:not(.btn).current::after{right:0;background:var(--accent)}
+.nav-links a:not(.btn).current::after{left:0;right:0;background:var(--cap-gold)}
 .nav-links .btn{letter-spacing:.14em;text-transform:uppercase;font-size:.78rem}
 @media(max-width:920px){
   .nav-links a:not(.btn){font-size:.95rem;letter-spacing:.14em}
   .nav-links a:not(.btn)::after{display:none}
 }
+
+/* — logo bez kafla: przezroczysty PNG + cień kształtu — */
+.brand-logo{border-radius:0;box-shadow:none;background:none;filter:drop-shadow(0 2px 7px rgba(8,6,4,.4))}
