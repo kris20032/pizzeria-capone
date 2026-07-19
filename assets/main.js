@@ -80,3 +80,30 @@
   }, { passive: true });
   upd();
 })();
+
+// podświetlenie dzisiejszego dnia w godzinach otwarcia
+(function () {
+  var today = new Date().getDay();
+  var row = document.querySelector('.godz-row[data-day="' + today + '"]');
+  if (row) row.classList.add('is-today');
+})();
+
+// lightbox galerii (klik = powiększenie)
+(function () {
+  var tiles = document.querySelectorAll('.gallery .tile img');
+  if (!tiles.length || !window.HTMLDialogElement) return;
+  var dlg = document.createElement('dialog');
+  dlg.className = 'lb';
+  dlg.innerHTML = '<button class="lb-x" aria-label="Zamknij">&times;</button><img alt="">';
+  document.body.appendChild(dlg);
+  var big = dlg.querySelector('img');
+  tiles.forEach(function (im) {
+    im.parentElement.addEventListener('click', function () {
+      big.src = im.src; big.alt = im.alt || '';
+      dlg.showModal();
+    });
+  });
+  dlg.addEventListener('click', function (e) {
+    if (e.target !== big) dlg.close();
+  });
+})();
