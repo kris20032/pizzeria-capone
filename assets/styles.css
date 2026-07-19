@@ -578,27 +578,46 @@ section{padding-block:clamp(64px,8vw,128px)}
 
 @media (max-width:560px){:root{--text-h1:clamp(1.9rem, 1.15rem + 4.4vw, 2.7rem);--text-h2:clamp(1.5rem, 1rem + 3vw, 2.1rem)}h1,h2{overflow-wrap:break-word}}
 
-/* ===== WARSTWA AUTORSKA CAPONE - strona docelowa (nie demo) ===== */
+/* ===== WARSTWA AUTORSKA CAPONE v2 - strona docelowa ===== */
 :root{
   --accent:#B3272D; --accent-d:#8E1E23; --accent-soft:rgba(179,39,45,.10);
   --cap-dark:#241812; --cap-dark-2:#2B1D14;
   --cap-cream:#F4EBDD; --cap-cream-mut:rgba(244,235,221,.72);
   --cap-gold:#D9A05B;
 }
-.hg-since{color:var(--cap-gold)}
 
-/* — sekcja "Karta" na stronie głównej: ciemna karta restauracyjna — */
-#menu.menu-sec{background:linear-gradient(180deg,var(--cap-dark),var(--cap-dark-2))}
-#menu.menu-sec .eyebrow{color:var(--cap-gold)}
-#menu.menu-sec h2{color:var(--cap-cream)}
-#menu.menu-sec .menu-cat{background:rgba(255,255,255,.035);border:1px solid rgba(244,235,221,.16);border-radius:12px}
-#menu.menu-sec .menu-cat h3{color:var(--cap-cream)}
-#menu.menu-sec .menu-cat p{color:var(--cap-cream-mut)}
-#menu.menu-sec .muted{color:var(--cap-cream-mut)}
-#menu.menu-sec .btn{border-color:rgba(244,235,221,.4);color:var(--cap-cream)}
-#menu.menu-sec .btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+/* — hero: czytelna hierarchia — */
+.hero-gastro .hg-veil{background:linear-gradient(180deg,rgba(18,11,7,.42) 0%,rgba(18,11,7,.18) 42%,rgba(18,11,7,.82) 100%)}
+.hg-over{display:block;font-family:"Hanken Grotesk",sans-serif;font-size:clamp(.78rem,.72rem + .3vw,.95rem);font-weight:600;letter-spacing:.34em;text-transform:uppercase;color:var(--cap-gold);margin-bottom:16px;text-shadow:0 1px 12px rgba(0,0,0,.45)}
+.hg-sub{display:block;font-size:.42em;font-weight:500;letter-spacing:.02em;margin-top:.6em;color:rgba(245,241,234,.95);text-shadow:0 1px 14px rgba(0,0,0,.5)}
+.hg-tagline{text-shadow:0 2px 24px rgba(0,0,0,.45)}
 
-/* — menu (oferta): karta z kropkowanymi prowadnicami — */
+/* — karty z jedzeniem na stronie głównej — */
+.kcards{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6);margin-top:var(--space-7)}
+@media(max-width:980px){.kcards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.kcards{grid-template-columns:1fr}}
+.kcard{display:block;background:#fff;border-radius:16px;overflow:hidden;text-decoration:none;color:var(--ink);
+  box-shadow:0 1px 2px rgba(42,32,26,.05),0 14px 34px -14px rgba(42,32,26,.16);
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.kcard:hover{transform:translateY(-6px);box-shadow:0 2px 4px rgba(42,32,26,.06),0 26px 52px -16px rgba(42,32,26,.26)}
+.kcard-img{aspect-ratio:4/3;overflow:hidden;background:var(--cap-dark)}
+.kcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.kcard:hover .kcard-img img{transform:scale(1.055)}
+.kcard-body{padding:var(--space-5) var(--space-5) var(--space-6)}
+.kcard-body h3{margin-bottom:var(--space-2)}
+.kcard-body p{color:var(--muted);font-size:var(--text-sm);line-height:1.6}
+.kcard-link{display:inline-flex;align-items:center;gap:6px;margin-top:var(--space-4);color:var(--accent);font-weight:600;font-size:.9rem}
+.kcard:hover .kcard-link .arr{transform:translateX(4px)}
+.kcard-link .arr{transition:transform .3s}
+
+/* — pasek zaufania (liczby) — */
+.statband{background:linear-gradient(180deg,var(--cap-dark),var(--cap-dark-2));padding-block:var(--space-8)}
+.statband-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-6);text-align:center}
+@media(max-width:860px){.statband-grid{grid-template-columns:repeat(2,1fr);row-gap:var(--space-7)}}
+.statband .n{font-family:"Bodoni Moda",serif;font-weight:600;font-size:clamp(2.2rem,1.8rem + 2vw,3.4rem);color:var(--cap-gold);line-height:1}
+.statband .l{margin-top:10px;font-size:.82rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--cap-cream-mut)}
+
+/* — menu (oferta): karta z prowadnicami — */
 .mitem{display:grid;grid-template-columns:max-content 1fr max-content;column-gap:12px;align-items:baseline}
 .mitem::after{content:"";grid-column:2;grid-row:1;border-bottom:2px dotted rgba(42,32,26,.30);transform:translateY(-4px)}
 .mitem .mn{grid-column:1;grid-row:1}
@@ -607,10 +626,15 @@ section{padding-block:clamp(64px,8vw,128px)}
 .menu2-head{border-bottom:2px solid var(--accent);padding-bottom:10px}
 .menu2-head h3{color:var(--accent-d)}
 
-/* — godziny + mapa obok siebie — */
+/* — kontakt: karta + mapa w prawej kolumnie — */
+.contact-side{display:flex;flex-direction:column;gap:var(--space-5)}
+.contact-side .map-side{flex:1;width:100%;min-height:360px;border:0;border-radius:14px;filter:saturate(.92)}
+.contact-grid{align-items:stretch}
+
+/* — godziny + mapa na głównej — */
 .trust-cols{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);align-items:stretch}
 .map-mini{width:100%;height:100%;min-height:420px;border:0;border-radius:14px;filter:saturate(.92)}
 @media(max-width:900px){.trust-cols{grid-template-columns:1fr}.map-mini{min-height:300px}}
 
-/* — opinie: akcent — */
+/* — opinie — */
 .opinie figure{border-left:3px solid var(--accent)}
