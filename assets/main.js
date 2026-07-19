@@ -168,3 +168,22 @@
     t = setTimeout(function () { b.classList.toggle('show', window.scrollY > 700); t = null; }, 120);
   }, { passive: true });
 })();
+
+// cień paska kategorii, gdy dokuje u góry
+(function () {
+  var mn = document.querySelector('.mnav');
+  if (!mn || !('IntersectionObserver' in window)) return;
+  var s = document.createElement('div');
+  mn.parentNode.insertBefore(s, mn);
+  new IntersectionObserver(function (e) {
+    mn.classList.toggle('stuck', !e[0].isIntersecting);
+  }).observe(s);
+})();
+
+// podkreślenie aktualnej podstrony w nawigacji
+(function () {
+  var here = (location.pathname.split('/').pop() || 'index.html');
+  document.querySelectorAll('.nav-links a').forEach(function (a) {
+    if (a.getAttribute('href') === here) a.classList.add('current');
+  });
+})();

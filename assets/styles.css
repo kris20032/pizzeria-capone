@@ -682,15 +682,15 @@ section{padding-block:clamp(64px,8vw,128px)}
 
 /* — płynne przewijanie + kotwice pod sticky nav — */
 html{scroll-behavior:smooth}
-.menu2-block{scroll-margin-top:132px}
+.menu2-block{scroll-margin-top:84px}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 
 /* — dymek FB (lewy dół, desktop) — */
 .fb-float{position:fixed;left:22px;bottom:22px;z-index:80;display:flex;align-items:center;justify-content:center;
-  width:52px;height:52px;border-radius:50%;background:#fff;color:#1877F2;
-  box-shadow:0 2px 6px rgba(42,32,26,.12),0 14px 34px -12px rgba(42,32,26,.35);
-  transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
-.fb-float:hover{transform:translateY(-4px);box-shadow:0 4px 10px rgba(42,32,26,.14),0 22px 44px -12px rgba(42,32,26,.42)}
+  width:50px;height:50px;border-radius:50%;background:#1877F2;color:#fff;
+  box-shadow:0 3px 8px rgba(24,119,242,.35),0 14px 30px -10px rgba(24,119,242,.45);
+  transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s,background .25s}
+.fb-float:hover{transform:translateY(-4px);background:#1266d6;box-shadow:0 5px 12px rgba(24,119,242,.4),0 20px 40px -10px rgba(24,119,242,.55)}
 .fb-float .fb-tip{position:absolute;left:calc(100% + 12px);white-space:nowrap;background:var(--cap-dark);color:var(--cap-cream);
   font-size:.8rem;font-weight:600;padding:8px 13px;border-radius:9px;opacity:0;transform:translateX(-6px);pointer-events:none;
   transition:opacity .25s,transform .25s}
@@ -710,9 +710,14 @@ html{scroll-behavior:smooth}
 /* hero-gastro nav ma jasny tekst na przezroczystym pasku - chip zostaje bialy, OK */
 
 /* — pasek kategorii menu (oferta) — */
-.mnav{position:sticky;top:64px;z-index:70;background:rgba(251,246,238,.92);backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line)}
-.mnav-in{max-width:1200px;margin-inline:auto;display:flex;gap:8px;overflow-x:auto;padding:12px 20px;scrollbar-width:none}
+.mnav{position:sticky;top:0;z-index:70;background:var(--paper);border-bottom:1px solid var(--line);
+  transition:box-shadow .3s}
+.mnav.stuck{box-shadow:0 12px 28px -18px rgba(42,32,26,.4)}
+.mnav::before,.mnav::after{content:"";position:absolute;top:0;bottom:0;width:42px;pointer-events:none;z-index:2}
+.mnav::before{left:0;background:linear-gradient(90deg,var(--paper),rgba(251,246,238,0))}
+.mnav::after{right:0;background:linear-gradient(270deg,var(--paper),rgba(251,246,238,0))}
+.mnav-in{max-width:1200px;margin-inline:auto;display:flex;gap:8px;overflow-x:auto;padding:14px 42px;scrollbar-width:none}
+@media(min-width:1180px){.mnav-in{justify-content:safe center}}
 .mnav-in::-webkit-scrollbar{display:none}
 .mnav a{flex:0 0 auto;white-space:nowrap;font-size:.85rem;font-weight:600;color:var(--ink-soft);
   border:1px solid var(--line);border-radius:99px;padding:8px 16px;transition:all .25s}
@@ -736,10 +741,29 @@ html{scroll-behavior:smooth}
 @media(max-width:640px){.lb .lb-nav{width:42px;height:42px}.lb .lb-prev{left:10px}.lb .lb-next{right:10px}}
 
 /* — mikrodetale — */
-.nav-links a:not(.btn){position:relative}
-.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;right:100%;bottom:-4px;height:2px;background:var(--accent);transition:right .28s cubic-bezier(.2,.7,.2,1)}
-.nav-links a:not(.btn):hover::after{right:0}
+
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
 ::selection{background:var(--accent);color:#fff}
 .btn{transition:transform .2s,background .25s,border-color .25s,color .25s,box-shadow .25s}
 .btn:active{transform:scale(.97)}
+
+/* — nav: oddech dla logo — */
+.nav-inner{height:100px}
+.brand-logo{height:62px}
+.nav.is-stuck .nav-inner{height:74px}
+.nav.is-stuck .brand-logo{height:50px}
+@media(max-width:680px){.nav-inner{height:78px}.brand-logo{height:46px}}
+
+/* — navbar w duchu Nobu: wersaliki, oddech, rysująca się linia — */
+.nav-links{gap:clamp(22px,2.6vw,40px)}
+.nav-links a:not(.btn){position:relative;font-size:.76rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;opacity:.82;transition:opacity .3s}
+.nav-links a:not(.btn):hover{opacity:1;color:inherit}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;right:100%;bottom:-7px;height:1px;background:currentColor;transition:right .34s cubic-bezier(.25,.8,.25,1)}
+.nav-links a:not(.btn):hover::after{right:0}
+.nav-links a:not(.btn).current{opacity:1}
+.nav-links a:not(.btn).current::after{right:0;background:var(--accent)}
+.nav-links .btn{letter-spacing:.14em;text-transform:uppercase;font-size:.78rem}
+@media(max-width:920px){
+  .nav-links a:not(.btn){font-size:.95rem;letter-spacing:.14em}
+  .nav-links a:not(.btn)::after{display:none}
+}
