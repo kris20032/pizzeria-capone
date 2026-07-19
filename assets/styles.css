@@ -679,3 +679,67 @@ section{padding-block:clamp(64px,8vw,128px)}
 .lb .lb-x{position:fixed;top:18px;right:22px;background:none;border:0;color:#fff;font-size:2.2rem;line-height:1;cursor:pointer;opacity:.8}
 .lb .lb-x:hover{opacity:1}
 .lb::backdrop{background:transparent}
+
+/* — płynne przewijanie + kotwice pod sticky nav — */
+html{scroll-behavior:smooth}
+.menu2-block{scroll-margin-top:132px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+
+/* — dymek FB (lewy dół, desktop) — */
+.fb-float{position:fixed;left:22px;bottom:22px;z-index:80;display:flex;align-items:center;justify-content:center;
+  width:52px;height:52px;border-radius:50%;background:#fff;color:#1877F2;
+  box-shadow:0 2px 6px rgba(42,32,26,.12),0 14px 34px -12px rgba(42,32,26,.35);
+  transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
+.fb-float:hover{transform:translateY(-4px);box-shadow:0 4px 10px rgba(42,32,26,.14),0 22px 44px -12px rgba(42,32,26,.42)}
+.fb-float .fb-tip{position:absolute;left:calc(100% + 12px);white-space:nowrap;background:var(--cap-dark);color:var(--cap-cream);
+  font-size:.8rem;font-weight:600;padding:8px 13px;border-radius:9px;opacity:0;transform:translateX(-6px);pointer-events:none;
+  transition:opacity .25s,transform .25s}
+.fb-float:hover .fb-tip{opacity:1;transform:translateX(0)}
+@media(max-width:820px){.fb-float{display:none}} /* na mobile FB jest w dolnym pasku */
+
+/* — pasek mobilny: naprawa siatki (3 elementy) — */
+@media(max-width:820px){.sticky-reserve{grid-template-columns:auto 1fr auto}.sr-fb{background:var(--paper);color:#1877F2;padding-inline:20px !important;display:flex;align-items:center}}
+
+/* — chip "Otwarte teraz" w nawigacji — */
+.open-chip{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;font-weight:700;letter-spacing:.04em;
+  color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:99px;padding:7px 13px;margin-right:6px}
+.open-chip .dot{width:8px;height:8px;border-radius:50%;background:#2E9E44;box-shadow:0 0 0 3px rgba(46,158,68,.18);animation:ocpulse 2.2s ease-in-out infinite}
+.open-chip.closed .dot{background:#B3272D;box-shadow:0 0 0 3px rgba(179,39,45,.15);animation:none}
+@keyframes ocpulse{50%{box-shadow:0 0 0 6px rgba(46,158,68,.05)}}
+@media(max-width:1080px){.open-chip{display:none}}
+/* hero-gastro nav ma jasny tekst na przezroczystym pasku - chip zostaje bialy, OK */
+
+/* — pasek kategorii menu (oferta) — */
+.mnav{position:sticky;top:64px;z-index:70;background:rgba(251,246,238,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.mnav-in{max-width:1200px;margin-inline:auto;display:flex;gap:8px;overflow-x:auto;padding:12px 20px;scrollbar-width:none}
+.mnav-in::-webkit-scrollbar{display:none}
+.mnav a{flex:0 0 auto;white-space:nowrap;font-size:.85rem;font-weight:600;color:var(--ink-soft);
+  border:1px solid var(--line);border-radius:99px;padding:8px 16px;transition:all .25s}
+.mnav a:hover{border-color:var(--accent);color:var(--accent-d)}
+.mnav a.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* — przycisk "do góry" — */
+.to-top{position:fixed;right:22px;bottom:22px;z-index:80;width:46px;height:46px;border-radius:50%;border:0;cursor:pointer;
+  background:var(--cap-dark);color:var(--cap-cream);display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;transform:translateY(10px);transition:all .3s}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top:hover{background:var(--accent)}
+@media(max-width:820px){.to-top{bottom:74px;right:14px}}
+
+/* — lightbox: strzałki + licznik — */
+.lb .lb-nav{position:fixed;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);
+  color:#fff;width:52px;height:52px;border-radius:50%;font-size:1.5rem;line-height:1;cursor:pointer;transition:background .25s}
+.lb .lb-nav:hover{background:rgba(255,255,255,.2)}
+.lb .lb-prev{left:22px}.lb .lb-next{right:22px}
+.lb .lb-count{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.75);font-size:.9rem;letter-spacing:.08em}
+@media(max-width:640px){.lb .lb-nav{width:42px;height:42px}.lb .lb-prev{left:10px}.lb .lb-next{right:10px}}
+
+/* — mikrodetale — */
+.nav-links a:not(.btn){position:relative}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;right:100%;bottom:-4px;height:2px;background:var(--accent);transition:right .28s cubic-bezier(.2,.7,.2,1)}
+.nav-links a:not(.btn):hover::after{right:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+::selection{background:var(--accent);color:#fff}
+.btn{transition:transform .2s,background .25s,border-color .25s,color .25s,box-shadow .25s}
+.btn:active{transform:scale(.97)}

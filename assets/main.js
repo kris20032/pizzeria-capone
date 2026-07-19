@@ -88,22 +88,83 @@
   if (row) row.classList.add('is-today');
 })();
 
-// lightbox galerii (klik = powiększenie)
+// lightbox galerii v2 (strzałki + klawiatura + licznik)
 (function () {
-  var tiles = document.querySelectorAll('.gallery .tile img');
+  var tiles = Array.prototype.slice.call(document.querySelectorAll('.gallery .tile img'));
   if (!tiles.length || !window.HTMLDialogElement) return;
   var dlg = document.createElement('dialog');
   dlg.className = 'lb';
-  dlg.innerHTML = '<button class="lb-x" aria-label="Zamknij">&times;</button><img alt="">';
+  dlg.innerHTML = '<button class="lb-x" aria-label="Zamknij">&times;</button>' +
+    '<button class="lb-nav lb-prev" aria-label="Poprzednie">&#8592;</button><img alt="">' +
+    '<button class="lb-nav lb-next" aria-label="Nast\u0119pne">&#8594;</button><span class="lb-count"></span>';
   document.body.appendChild(dlg);
-  var big = dlg.querySelector('img');
-  tiles.forEach(function (im) {
-    im.parentElement.addEventListener('click', function () {
-      big.src = im.src; big.alt = im.alt || '';
-      dlg.showModal();
-    });
+  var big = dlg.querySelector('img'), count = dlg.querySelector('.lb-count'), cur = 0;
+  function show(n) {
+    cur = (n + tiles.length) % tiles.length;
+    big.src = tiles[cur].src; big.alt = tiles[cur].alt || '';
+    count.textContent = (cur + 1) + ' / ' + tiles.length;
+  }
+  tiles.forEach(function (im, n) {
+    im.parentElement.addEventListener('click', function () { show(n); dlg.showModal(); });
+  });
+  dlg.querySelector('.lb-prev').addEventListener('click', function (e) { e.stopPropagation(); show(cur - 1); });
+  dlg.querySelector('.lb-next').addEventListener('click', function (e) { e.stopPropagation(); show(cur + 1); });
+  dlg.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') show(cur - 1);
+    if (e.key === 'ArrowRight') show(cur + 1);
   });
   dlg.addEventListener('click', function (e) {
-    if (e.target !== big) dlg.close();
+    if (e.target === dlg || e.target === big || e.target.classList.contains('lb-x')) dlg.close();
   });
+})();
+
+// status "Otwarte teraz" (12:00-22:00 codziennie)
+(function () {
+  var chips = document.querySelectorAll('.open-chip');
+  if (!chips.length) return;
+  function upd() {
+    var now = new Date(), h = now.getHours() + now.getMinutes() / 60;
+    var open = h >= 12 && h < 22;
+    chips.forEach(function (c) {
+      c.hidden = false;
+      c.classList.toggle('closed', !open);
+      c.querySelector('.oc-txt').textContent = open ? 'Otwarte do 22:00' : 'Otwieramy o 12:00';
+    });
+  }
+  upd(); setInterval(upd, 60000);
+})();
+
+// scrollspy paska kategorii menu
+(function () {
+  var nav = document.querySelector('.mnav');
+  if (!nav) return;
+  var links = nav.querySelectorAll('a');
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var blocks = document.querySelectorAll('.menu2-block[id]');
+  if (!('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        links.forEach(function (a) { a.classList.remove('active'); });
+        var a = map[e.target.id];
+        if (a) { a.classList.add('active'); a.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); }
+      }
+    });
+  }, { rootMargin: '-140px 0px -60% 0px', threshold: 0 });
+  blocks.forEach(function (b) { io.observe(b); });
+})();
+
+// przycisk "do góry"
+(function () {
+  var b = document.createElement('button');
+  b.className = 'to-top'; b.setAttribute('aria-label', 'Wr\u00f3\u0107 na g\u00f3r\u0119');
+  b.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+  document.body.appendChild(b);
+  b.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  var t;
+  window.addEventListener('scroll', function () {
+    if (t) return;
+    t = setTimeout(function () { b.classList.toggle('show', window.scrollY > 700); t = null; }, 120);
+  }, { passive: true });
 })();
