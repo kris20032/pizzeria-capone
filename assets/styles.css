@@ -770,3 +770,20 @@ html{scroll-behavior:smooth}
 
 /* — logo bez kafla: przezroczysty PNG + cień kształtu — */
 .brand-logo{border-radius:0;box-shadow:none;background:none;filter:drop-shadow(0 2px 7px rgba(8,6,4,.4))}
+
+/* — FIX hover: napis MA zostać widoczny (nie dziedzicz ciemnego koloru z rodzica) — */
+.nav:not(.nav-solid) .nav-links a:not(.btn):hover{color:#fff}
+.nav.nav-solid .nav-links a:not(.btn):hover{color:var(--ink)}
+/* linia rozwija się od środka na boki (Nobu) — kolor idzie za tekstem, więc zawsze widoczna */
+.nav-links a:not(.btn):hover::after{left:0;right:0}
+
+/* — CTA "Zamów": ZAWSZE pełna czerwień + biały tekst (koniec znikania nad zdjęciem i słabego kontrastu) — */
+.nav .nav-links a.btn-accent,
+.nav.nav-solid .nav-links a.btn-accent,
+.nav:not(.nav-solid) .nav-links a.btn-accent{
+  background:var(--accent);border:1px solid var(--accent);color:#fff !important;
+  box-shadow:0 4px 14px rgba(179,39,45,.28)}
+.nav .nav-links a.btn-accent:hover,
+.nav.nav-solid .nav-links a.btn-accent:hover,
+.nav:not(.nav-solid) .nav-links a.btn-accent:hover{
+  background:var(--accent-d);border-color:var(--accent-d);color:#fff !important;box-shadow:0 6px 18px rgba(179,39,45,.34)}
